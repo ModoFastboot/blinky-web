@@ -165,5 +165,107 @@ a{color:#16130F}a:hover{color:#000}
   </section>
 
 </div>
+<!-- Chat con el asistente de Blinky (IA). El cerebro corre en Cloudflare: chat.blinkystudio.com.ar -->
+<style>
+  #bk-chat-btn{position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;gap:10px;border:0;cursor:pointer;
+    background:#16130F;color:#fff;font:500 16px 'Bricolage Grotesque',sans-serif;padding:10px 18px 10px 12px;border-radius:999px;box-shadow:0 8px 24px rgba(22,19,15,.25)}
+  #bk-chat-btn:hover{transform:translateY(-2px)}
+  #bk-chat-btn svg{width:34px;height:34px;flex:none}
+  #bk-chat{position:fixed;right:20px;bottom:20px;z-index:10000;width:370px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 40px);
+    display:none;flex-direction:column;background:#F3F1EC;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(22,19,15,.3);font-family:'Bricolage Grotesque',sans-serif;color:#16130F}
+  #bk-chat.abierto{display:flex}
+  #bk-chat header{display:flex;align-items:center;gap:10px;background:#16130F;color:#fff;padding:14px 16px}
+  #bk-chat header svg{width:36px;height:36px;flex:none}
+  #bk-chat header b{display:block;font-size:17px;font-weight:800;line-height:1.1}
+  #bk-chat header span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#FF6B1A}
+  #bk-chat header button{margin-left:auto;background:none;border:0;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:0 4px}
+  #bk-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+  .bk-m{max-width:85%;padding:10px 13px;border-radius:16px;font-size:15.5px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+  .bk-bot{background:#fff;align-self:flex-start;border-bottom-left-radius:4px}
+  .bk-yo{background:#FF6B1A;color:#16130F;align-self:flex-end;border-bottom-right-radius:4px}
+  .bk-wa{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#0b2914;text-decoration:none;font-weight:500;padding:10px 16px;border-radius:999px;font-size:15px}
+  .bk-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .bk-chips button{background:transparent;border:1.5px solid #16130F;border-radius:999px;padding:6px 12px;font:500 14px 'Bricolage Grotesque',sans-serif;cursor:pointer;color:#16130F}
+  .bk-chips button:hover{background:#16130F;color:#fff}
+  .bk-escribiendo{align-self:flex-start;background:#fff;border-radius:16px;padding:12px 14px;display:flex;gap:4px}
+  .bk-escribiendo i{width:7px;height:7px;border-radius:50%;background:#5A544C;animation:bk-p 1s infinite}
+  .bk-escribiendo i:nth-child(2){animation-delay:.15s}.bk-escribiendo i:nth-child(3){animation-delay:.3s}
+  @keyframes bk-p{0%,100%{opacity:.25}50%{opacity:1}}
+  #bk-form{display:flex;gap:8px;padding:12px;border-top:1px solid #DDD8CF;background:#F3F1EC}
+  #bk-form textarea{flex:1;resize:none;border:1.5px solid #16130F;border-radius:14px;padding:10px 12px;font:16px 'Bricolage Grotesque',sans-serif;max-height:110px;background:#fff;color:#16130F}
+  #bk-form textarea:focus{outline:2px solid #FF6B1A;outline-offset:1px}
+  #bk-form button{border:0;border-radius:14px;background:#16130F;color:#fff;padding:0 16px;font:500 15px 'Bricolage Grotesque',sans-serif;cursor:pointer}
+  #bk-form button:disabled{opacity:.5;cursor:default}
+  #bk-aviso{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#5A544C;text-align:center;padding:0 12px 10px;background:#F3F1EC}
+  @media (max-width:480px){#bk-chat{right:0;bottom:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}#bk-chat-btn span{display:none}#bk-chat-btn{padding:10px}}
+</style>
+<button id="bk-chat-btn" type="button" aria-label="Abrir chat con el asistente de Blinky Studio">
+  <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="32" fill="#FF6B1A"/><g fill="#fff"><path d="M8 32 Q15 25 22 32 Q15 39 8 32Z"/><path d="M23 32 Q32 21 41 32 Q32 43 23 32Z"/><path d="M42 32 Q49 25 56 32 Q49 39 42 32Z"/></g><g fill="#16130F"><circle cx="15" cy="32" r="2.4"/><circle cx="32" cy="32" r="3.8"/><circle cx="49" cy="32" r="2.4"/></g></svg>
+  <span>¿Tenés una consulta?</span>
+</button>
+<section id="bk-chat" role="dialog" aria-label="Chat con el asistente de Blinky Studio">
+  <header>
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#FF6B1A"/><g fill="#fff"><path d="M6 32 Q14 24 22 32 Q14 40 6 32Z"/><path d="M23 32 Q32 20 41 32 Q32 44 23 32Z"/><path d="M42 32 Q50 24 58 32 Q50 40 42 32Z"/></g><g fill="#16130F"><circle cx="14" cy="32" r="2.6"/><circle cx="32" cy="32" r="4"/><circle cx="50" cy="32" r="2.6"/></g></svg>
+    <div><b>Asistente de Blinky</b><span>Responde al instante</span></div>
+    <button type="button" id="bk-cerrar" aria-label="Cerrar chat">×</button>
+  </header>
+  <div id="bk-msgs" aria-live="polite"></div>
+  <form id="bk-form">
+    <textarea id="bk-texto" rows="1" maxlength="600" placeholder="Escribí tu consulta…" aria-label="Tu mensaje"></textarea>
+    <button type="submit" id="bk-enviar">Enviar</button>
+  </form>
+  <div id="bk-aviso">Asistente con IA · puede equivocarse · no compartas datos sensibles</div>
+</section>
+<script>
+(function(){
+  var API = "https://chat.blinkystudio.com.ar";
+  var SALUDO = "¡Hola! 👋 Soy el asistente virtual de Blinky Studio. ¿En qué te puedo ayudar?";
+  var SUGERENCIAS = ["¿Qué hacen?", "Quiero un bot de WhatsApp", "Pedir una demo del sistema para servicio técnico"];
+  var hist = [], ocupado = false;
+  try { hist = JSON.parse(sessionStorage.getItem("bk-chat") || "[]"); } catch (e) { hist = []; }
+  var $ = function (id) { return document.getElementById(id); };
+  var caja = $("bk-msgs"), ta = $("bk-texto");
+
+  function guardar() { try { sessionStorage.setItem("bk-chat", JSON.stringify(hist.slice(-30))); } catch (e) {} }
+  function burbuja(texto, clase) { var d = document.createElement("div"); d.className = "bk-m " + clase; d.textContent = texto; caja.appendChild(d); }
+  function botonWA(url) { var a = document.createElement("a"); a.className = "bk-wa"; a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "💬 Seguir por WhatsApp"; caja.appendChild(a); }
+  function abajo() { caja.scrollTop = caja.scrollHeight; }
+  function pintar() {
+    caja.innerHTML = "";
+    burbuja(SALUDO, "bk-bot");
+    hist.forEach(function (m) { burbuja(m.content, m.role === "user" ? "bk-yo" : "bk-bot"); if (m.wa) botonWA(m.wa); });
+    if (!hist.length) {
+      var c = document.createElement("div"); c.className = "bk-chips";
+      SUGERENCIAS.forEach(function (s) { var b = document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = function () { enviar(s); }; c.appendChild(b); });
+      caja.appendChild(c);
+    }
+    abajo();
+  }
+  function abrir() { $("bk-chat").classList.add("abierto"); $("bk-chat-btn").style.display = "none"; pintar(); setTimeout(function () { ta.focus(); }, 50); }
+  function cerrar() { $("bk-chat").classList.remove("abierto"); $("bk-chat-btn").style.display = ""; }
+
+  function enviar(texto) {
+    texto = (texto || "").trim();
+    if (!texto || ocupado) return;
+    ocupado = true; $("bk-enviar").disabled = true;
+    hist.push({ role: "user", content: texto }); guardar(); pintar();
+    var esc = document.createElement("div"); esc.className = "bk-escribiendo"; esc.innerHTML = "<i></i><i></i><i></i>"; caja.appendChild(esc); abajo();
+    fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: hist.map(function (m) { return { role: m.role, content: m.content }; }) }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { hist.push({ role: "assistant", content: d.reply || "Perdón, no te entendí. ¿Me lo repetís?", wa: d.whatsapp || null }); })
+      .catch(function () { hist.push({ role: "assistant", content: "No me pude conectar 😕 Escribinos por WhatsApp y te respondemos.", wa: "https://wa.me/5491123177277" }); })
+      .then(function () { ocupado = false; $("bk-enviar").disabled = false; guardar(); pintar(); ta.focus(); });
+  }
+
+  $("bk-chat-btn").onclick = abrir;
+  $("bk-cerrar").onclick = cerrar;
+  $("bk-form").onsubmit = function (e) { e.preventDefault(); var t = ta.value; ta.value = ""; ta.style.height = "auto"; enviar(t); };
+  ta.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("bk-form").requestSubmit(); } });
+  ta.addEventListener("input", function () { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 110) + "px"; });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") cerrar(); });
+})();
+</script>
+
 </body>
 </html>
