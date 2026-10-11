@@ -9,7 +9,7 @@
 <meta property="og:description" content="Bots de WhatsApp con IA, avisos automáticos y sistemas a medida.">
 <meta property="og:url" content="https://blinkystudio.com.ar/">
 <meta name="theme-color" content="#16130F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316130F'/%3E%3Cg fill='%23fff'%3E%3Cpath d='M6 32 Q14 24 22 32 Q14 40 6 32Z'/%3E%3Cpath d='M23 32 Q32 20 41 32 Q32 44 23 32Z'/%3E%3Cpath d='M42 32 Q50 24 58 32 Q50 40 42 32Z'/%3E%3C/g%3E%3Cg fill='%2316130F'%3E%3Ccircle cx='14' cy='32' r='2.6'/%3E%3Ccircle cx='32' cy='32' r='4'/%3E%3Ccircle cx='50' cy='32' r='2.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2298%22%20height%3D%2298%22%20rx%3D%2222%22%20fill%3D%22%23FF7008%22/%3E%3Ccircle%20cx%3D%2221.7%22%20cy%3D%2249%22%20r%3D%2213.3%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2221.7%22%20cy%3D%2249%22%20r%3D%228.2%22%20fill%3D%22%2316181C%22/%3E%3Ccircle%20cx%3D%2249.8%22%20cy%3D%2249%22%20r%3D%2213.3%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2249.8%22%20cy%3D%2249%22%20r%3D%228.2%22%20fill%3D%22%2316181C%22/%3E%3Ccircle%20cx%3D%2278.4%22%20cy%3D%2249%22%20r%3D%2213.3%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2278.4%22%20cy%3D%2249%22%20r%3D%228.2%22%20fill%3D%22%2316181C%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
 <style>
@@ -20,6 +20,31 @@ a{color:#16130F}a:hover{color:#000}
 .d1{animation-delay:0s}.d2{animation-delay:.18s}.d3{animation-delay:.36s}
 </style>
 <style>html{scroll-behavior:smooth} @media (prefers-reduced-motion: reduce){.eye{animation:none}html{scroll-behavior:auto}}</style>
+<style>
+  .bk-logo-nav{width:48px;height:48px;display:block}
+  .bk-logo-hero{width:300px;height:300px;max-width:80vw;max-height:80vw;display:block;filter:drop-shadow(0 18px 30px rgba(244,90,0,.25))}
+  .bk-ojo{transform-box:fill-box;transform-origin:center;transition:transform .08s ease-in}
+  .bk-ojo.pest{transform:scaleY(.08)}
+  @media (prefers-reduced-motion: reduce){.bk-ojo{transition:none}.bk-ojo.pest{transform:none}}
+</style>
+<script>
+/* Parpadeo: cada tanto un ojo al azar (a veces dos seguidos), en cada logo por separado */
+(function(){
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function cicloLogo(svg){
+    var ojos = svg.querySelectorAll(".bk-ojo");
+    function pestanear(){
+      var o = ojos[Math.floor(Math.random()*ojos.length)];
+      o.classList.add("pest"); setTimeout(function(){ o.classList.remove("pest"); }, 140);
+      if (Math.random() < .25) setTimeout(pestanear, 260);            // a veces un segundo ojo enseguida
+      else setTimeout(pestanear, 1200 + Math.random()*3000);
+    }
+    setTimeout(pestanear, 400 + Math.random()*2000);
+  }
+  function iniciar(){ document.querySelectorAll("svg.bk-logo").forEach(cicloLogo); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar); else iniciar();
+})();
+</script>
 </head>
 <body>
 <div style="width: 100%; background: #F3F1EC; font-family: 'Bricolage Grotesque', sans-serif; color: #16130F; font-size: 18px; line-height: 1.55">
@@ -27,9 +52,7 @@ a{color:#16130F}a:hover{color:#000}
   <header style="background: #F3F1EC; border-bottom: 1px solid #E2DED6">
     <nav style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
       <a href="#inicio" style="display: flex; align-items: center; gap: 12px; text-decoration: none">
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: #16130F; display: flex; align-items: center; justify-content: center">
-          <svg width="38" height="14" viewBox="0 0 140 52" aria-hidden="true"><g class="eye d1"><path d="M2 26 Q20 8 38 26 Q20 44 2 26Z" fill="#FFFFFF"></path><circle cx="20" cy="26" r="6" fill="#16130F"></circle></g><g class="eye d2"><path d="M44 26 Q70 0 96 26 Q70 52 44 26Z" fill="#FFFFFF"></path><circle cx="70" cy="26" r="9" fill="#16130F"></circle></g><g class="eye d3"><path d="M102 26 Q120 8 138 26 Q120 44 102 26Z" fill="#FFFFFF"></path><circle cx="120" cy="26" r="6" fill="#16130F"></circle></g></svg>
-        </div>
+        <svg class="bk-logo bk-logo-nav" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="bkg-nav" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8C21"/><stop offset=".6" stop-color="#FF7008"/><stop offset="1" stop-color="#F45A00"/></linearGradient></defs><rect x="1" y="1" width="98" height="98" rx="22" fill="url(#bkg-nav)"/><g class="bk-ojo"><circle cx="21.7" cy="49" r="13.3" fill="#fff"/><circle cx="21.7" cy="49" r="8.2" fill="#16181C"/><circle cx="18.7" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="49.8" cy="49" r="13.3" fill="#fff"/><circle cx="49.8" cy="49" r="8.2" fill="#16181C"/><circle cx="46.8" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="78.4" cy="49" r="13.3" fill="#fff"/><circle cx="78.4" cy="49" r="8.2" fill="#16181C"/><circle cx="75.4" cy="45.5" r="2.6" fill="#fff"/></g></svg>
         <span style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Blinky <span style="font-weight: 500">Studio</span></span>
       </a>
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px">
@@ -52,9 +75,7 @@ a{color:#16130F}a:hover{color:#000}
       </div>
     </div>
     <div style="flex: 1 1 300px; display: flex; justify-content: center">
-      <div style="width: 300px; height: 300px; border-radius: 72px; background: #16130F; display: flex; align-items: center; justify-content: center">
-        <svg width="236" height="88" viewBox="0 0 140 52" role="img" aria-label="Logo de Blinky Studio: tres ojos parpadeando"><g class="eye d1"><path d="M2 26 Q20 8 38 26 Q20 44 2 26Z" fill="#FFFFFF"></path><circle cx="20" cy="26" r="6" fill="#16130F"></circle></g><g class="eye d2"><path d="M44 26 Q70 0 96 26 Q70 52 44 26Z" fill="#FFFFFF"></path><circle cx="70" cy="26" r="9" fill="#16130F"></circle></g><g class="eye d3"><path d="M102 26 Q120 8 138 26 Q120 44 102 26Z" fill="#FFFFFF"></path><circle cx="120" cy="26" r="6" fill="#16130F"></circle></g></svg>
-      </div>
+      <svg class="bk-logo bk-logo-hero" viewBox="0 0 100 100" role="img" aria-label="Logo de Blinky Studio: tres ojos que parpadean"><defs><linearGradient id="bkg-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8C21"/><stop offset=".6" stop-color="#FF7008"/><stop offset="1" stop-color="#F45A00"/></linearGradient></defs><rect x="1" y="1" width="98" height="98" rx="22" fill="url(#bkg-hero)"/><g class="bk-ojo"><circle cx="21.7" cy="49" r="13.3" fill="#fff"/><circle cx="21.7" cy="49" r="8.2" fill="#16181C"/><circle cx="18.7" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="49.8" cy="49" r="13.3" fill="#fff"/><circle cx="49.8" cy="49" r="8.2" fill="#16181C"/><circle cx="46.8" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="78.4" cy="49" r="13.3" fill="#fff"/><circle cx="78.4" cy="49" r="8.2" fill="#16181C"/><circle cx="75.4" cy="45.5" r="2.6" fill="#fff"/></g></svg>
     </div>
   </section>
 
@@ -200,12 +221,12 @@ a{color:#16130F}a:hover{color:#000}
   @media (max-width:480px){#bk-chat{right:0;bottom:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}#bk-chat-btn span{display:none}#bk-chat-btn{padding:10px}}
 </style>
 <button id="bk-chat-btn" type="button" aria-label="Abrir chat con el asistente de Blinky Studio">
-  <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="32" fill="#FF6B1A"/><g fill="#fff"><path d="M8 32 Q15 25 22 32 Q15 39 8 32Z"/><path d="M23 32 Q32 21 41 32 Q32 43 23 32Z"/><path d="M42 32 Q49 25 56 32 Q49 39 42 32Z"/></g><g fill="#16130F"><circle cx="15" cy="32" r="2.4"/><circle cx="32" cy="32" r="3.8"/><circle cx="49" cy="32" r="2.4"/></g></svg>
+  <svg class="bk-logo bk-logo-btn" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="bkg-btn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8C21"/><stop offset=".6" stop-color="#FF7008"/><stop offset="1" stop-color="#F45A00"/></linearGradient></defs><rect x="1" y="1" width="98" height="98" rx="22" fill="url(#bkg-btn)"/><g class="bk-ojo"><circle cx="21.7" cy="49" r="13.3" fill="#fff"/><circle cx="21.7" cy="49" r="8.2" fill="#16181C"/><circle cx="18.7" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="49.8" cy="49" r="13.3" fill="#fff"/><circle cx="49.8" cy="49" r="8.2" fill="#16181C"/><circle cx="46.8" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="78.4" cy="49" r="13.3" fill="#fff"/><circle cx="78.4" cy="49" r="8.2" fill="#16181C"/><circle cx="75.4" cy="45.5" r="2.6" fill="#fff"/></g></svg>
   <span>¿Tenés una consulta?</span>
 </button>
 <section id="bk-chat" role="dialog" aria-label="Chat con el asistente de Blinky Studio">
   <header>
-    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#FF6B1A"/><g fill="#fff"><path d="M6 32 Q14 24 22 32 Q14 40 6 32Z"/><path d="M23 32 Q32 20 41 32 Q32 44 23 32Z"/><path d="M42 32 Q50 24 58 32 Q50 40 42 32Z"/></g><g fill="#16130F"><circle cx="14" cy="32" r="2.6"/><circle cx="32" cy="32" r="4"/><circle cx="50" cy="32" r="2.6"/></g></svg>
+    <svg class="bk-logo bk-logo-chat" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="bkg-chat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8C21"/><stop offset=".6" stop-color="#FF7008"/><stop offset="1" stop-color="#F45A00"/></linearGradient></defs><rect x="1" y="1" width="98" height="98" rx="22" fill="url(#bkg-chat)"/><g class="bk-ojo"><circle cx="21.7" cy="49" r="13.3" fill="#fff"/><circle cx="21.7" cy="49" r="8.2" fill="#16181C"/><circle cx="18.7" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="49.8" cy="49" r="13.3" fill="#fff"/><circle cx="49.8" cy="49" r="8.2" fill="#16181C"/><circle cx="46.8" cy="45.5" r="2.6" fill="#fff"/></g><g class="bk-ojo"><circle cx="78.4" cy="49" r="13.3" fill="#fff"/><circle cx="78.4" cy="49" r="8.2" fill="#16181C"/><circle cx="75.4" cy="45.5" r="2.6" fill="#fff"/></g></svg>
     <div><b>Asistente de Blinky</b><span>Responde al instante</span></div>
     <button type="button" id="bk-cerrar" aria-label="Cerrar chat">×</button>
   </header>
@@ -253,7 +274,10 @@ a{color:#16130F}a:hover{color:#000}
     fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: hist.map(function (m) { return { role: m.role, content: m.content }; }) }) })
       .then(function (r) { return r.json(); })
-      .then(function (d) { hist.push({ role: "assistant", content: d.reply || "Perdón, no te entendí. ¿Me lo repetís?", wa: d.whatsapp || null }); })
+      .then(function (d) {
+        if (d.reply) hist.push({ role: "assistant", content: d.reply, wa: d.whatsapp || null });
+        else hist.push({ role: "assistant", content: "Ahora no puedo responder 😕 Escribinos por WhatsApp y te contestamos enseguida.", wa: "https://wa.me/5491123177277" });
+      })
       .catch(function () { hist.push({ role: "assistant", content: "No me pude conectar 😕 Escribinos por WhatsApp y te respondemos.", wa: "https://wa.me/5491123177277" }); })
       .then(function () { ocupado = false; $("bk-enviar").disabled = false; guardar(); pintar(); ta.focus(); });
   }
