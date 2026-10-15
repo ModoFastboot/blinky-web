@@ -223,11 +223,10 @@ a{color:#16130F}a:hover{color:#000}
   var SALUDO = "¡Hola! 👋 Soy el asistente virtual de Blinky Studio. ¿En qué te puedo ayudar?";
   var SUGERENCIAS = ["¿Qué hacen?", "Quiero un bot de WhatsApp", "Pedir una demo del sistema para servicio técnico"];
   var hist = [], ocupado = false;
-  try { hist = JSON.parse(sessionStorage.getItem("bk-chat") || "[]"); } catch (e) { hist = []; }
+  try { sessionStorage.removeItem("bk-chat"); } catch (e) {}
   var $ = function (id) { return document.getElementById(id); };
   var caja = $("bk-msgs"), ta = $("bk-texto");
 
-  function guardar() { try { sessionStorage.setItem("bk-chat", JSON.stringify(hist.slice(-30))); } catch (e) {} }
   function burbuja(texto, clase) { var d = document.createElement("div"); d.className = "bk-m " + clase; d.textContent = texto; caja.appendChild(d); }
   function botonWA(url) { var a = document.createElement("a"); a.className = "bk-wa"; a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "💬 Seguir por WhatsApp"; caja.appendChild(a); }
   function abajo() { caja.scrollTop = caja.scrollHeight; }
@@ -249,7 +248,7 @@ a{color:#16130F}a:hover{color:#000}
     texto = (texto || "").trim();
     if (!texto || ocupado) return;
     ocupado = true; $("bk-enviar").disabled = true;
-    hist.push({ role: "user", content: texto }); guardar(); pintar();
+    hist.push({ role: "user", content: texto }); pintar();
     var esc = document.createElement("div"); esc.className = "bk-escribiendo"; esc.innerHTML = "<i></i><i></i><i></i>"; caja.appendChild(esc); abajo();
     fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: hist.map(function (m) { return { role: m.role, content: m.content }; }) }) })
@@ -259,7 +258,7 @@ a{color:#16130F}a:hover{color:#000}
         else hist.push({ role: "assistant", content: "Ahora no puedo responder 😕 Escribinos por WhatsApp y te contestamos enseguida.", wa: "https://wa.me/5491123177277" });
       })
       .catch(function () { hist.push({ role: "assistant", content: "No me pude conectar 😕 Escribinos por WhatsApp y te respondemos.", wa: "https://wa.me/5491123177277" }); })
-      .then(function () { ocupado = false; $("bk-enviar").disabled = false; guardar(); pintar(); ta.focus(); });
+      .then(function () { ocupado = false; $("bk-enviar").disabled = false; pintar(); ta.focus(); });
   }
 
   $("bk-chat-btn").onclick = abrir;
